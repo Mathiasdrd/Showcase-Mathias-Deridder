@@ -28,7 +28,7 @@
                 <a href="{{route('home')}}">Home</a>               
                 @auth
                     Welcome {{auth()->user()->name}}
-                    <a href="">Upload</a>
+                    <a href="{{route('posts.create')}}">Upload</a>
                 @endauth
             </nav>
         </div>

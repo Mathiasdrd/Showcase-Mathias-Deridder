@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -31,3 +32,5 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 Route::get('/greeting', function() {
     return 'hello world';
 });
+
+Route::resource('posts', PostController::class);
