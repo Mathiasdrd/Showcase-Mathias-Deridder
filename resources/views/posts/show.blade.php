@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <h2>{{$post->post_title}}</h2>
 
     <img src="{{ asset('images/' . $post->image_path)}}" 
