@@ -62,6 +62,10 @@ class PostController extends Controller
             $formFields['category_id'] = $request->category;
         }
 
+        //replace spaces in post_title with underscore
+        //for image file name
+        $request->post_title = preg_replace('/\s+/', '_', $request->post_title);
+
         //gives image file a new name
         $newImagePath = time() . "_" . $request->post_title . '.' .
         $request->image_path->extension();
