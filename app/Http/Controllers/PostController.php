@@ -93,10 +93,14 @@ class PostController extends Controller
         ->where('id', '=', $post->user_id)
         ->select('name')
         ->get();
-        $post_category = DB::table('categories')
-        ->where('id', '=', $post->category_id)
-        ->select('id', 'category_name')
-        ->get();
+
+        $post_category = null;
+        if ($post->category_id !== null) {
+            $post_category = DB::table('categories')
+            ->where('id', '=', $post->category_id)
+            ->select('id', 'category_name')
+            ->get();
+        }
         return view('posts.show', [
             'post'=> $post,
             'post_creator' => $post_creator,
@@ -133,8 +137,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+        unlink("images/". $post->image_path);
+        $post->delete();
+        return redirect()->route('home');
     }
 }
