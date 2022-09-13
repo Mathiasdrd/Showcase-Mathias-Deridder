@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,20 +18,19 @@ use App\Http\Controllers\UserController;
 
 
 //Dit wordt de landingpage
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::resource('users', UserController::class);
-
-Route::get('login', [UserController::class, 'login'])->name('users.login');
-
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
-
-Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+Route::get('/', [CategoryController::class, 'index']
+)->name('home');
 
 Route::get('/greeting', function() {
     return 'hello world';
 });
 
+//Handle User routes
+Route::resource('users', UserController::class);
+Route::get('login', [UserController::class, 'login'])->name('users.login');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+
+//Handle Post routes
 Route::resource('posts', PostController::class);

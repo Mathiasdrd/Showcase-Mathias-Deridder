@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class Navigation extends Component
 {
+
+    public $category;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($category)
     {
-        //
+        $this->category = $category;
     }
 
     /**

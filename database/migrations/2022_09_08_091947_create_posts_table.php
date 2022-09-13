@@ -18,7 +18,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('src');
+            $table->string('post_title');
+            $table->string('image_path');
             $table->foreignId('user_id')->constrained();
             $table->string('tags');
             $table->string('description')->nullable();

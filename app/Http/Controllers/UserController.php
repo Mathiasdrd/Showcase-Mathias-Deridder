@@ -13,16 +13,11 @@ use Illuminate\Validation\Rules\Password;
 class UserController extends Controller
 {
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth', ['only' => ['show','logout']]);
+        $this->middleware('guest', ['only' => ['create','store']]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -96,18 +91,6 @@ class UserController extends Controller
 
         return redirect()->route('home')->with('message', 'User logged out');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('users.show')->with('user', auth()->user());
-    }
-
     /**
      * Update the specified resource in storage.
      *
