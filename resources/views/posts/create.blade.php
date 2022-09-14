@@ -5,7 +5,7 @@
             @csrf
             <div>
                 @if($errors->any())
-                    {{ implode('', $errors->all(':message')) }}
+                    {{$errors->first()}}
                 @endif
             </div>
             <div>

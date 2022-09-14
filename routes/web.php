@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\UserProfileController;
 
 /*
@@ -37,4 +39,6 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 Route::resource('posts', PostController::class);
 
 Route::get('/profile/{user}', [UserProfileController::class, 'showUserProfile'])->name('profile');
+
+Route::get('/moderator', [ModeratorController::class, 'showAllUsers'])->name('moderator');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -48,8 +49,8 @@ class PostController extends Controller
     {   
         //validate and add to formfields variable
         $formFields = $request->validate([
-            'post_title' => 'required|max:150',
             'image_path' => 'required|image|mimes:jpg,png,jpeg,svg',
+            'post_title' => 'required|max:150',
             'description' => 'required|max:250',
             'tags' => 'required|max:250',
             'is_image_owner' => 'required'
