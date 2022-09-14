@@ -45,7 +45,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {    
+    {   
         //validate and add to formfields variable
         $formFields = $request->validate([
             'post_title' => 'required|max:150',
@@ -56,6 +56,12 @@ class PostController extends Controller
         ]);
         $formFields['user_id'] = auth()->id();
 
+
+        //if image is not owned by OP, check for reference/creator 
+        if ($request->is_image_owner == 0 && $request->creator !== null ) {
+            $creator = strip_tags($request->creator);
+            $formFields['creator'] = $creator;
+        }
 
         //check if category was selected: not manditory
         if ($request->category !== null) {
@@ -72,7 +78,6 @@ class PostController extends Controller
         
         //moves image to public/images folder to display on website
         $request->image_path->move(public_path('images'), $newImagePath);
-
 
         $formFields['image_path'] = $newImagePath;
 
@@ -91,7 +96,7 @@ class PostController extends Controller
     {
         $post_creator = DB::table('users')
         ->where('id', '=', $post->user_id)
-        ->select('name')
+        ->select('id', 'name')
         ->get();
 
         $post_category = null;
@@ -101,6 +106,7 @@ class PostController extends Controller
             ->select('id', 'category_name')
             ->get();
         }
+
         return view('posts.show', [
             'post'=> $post,
             'post_creator' => $post_creator,

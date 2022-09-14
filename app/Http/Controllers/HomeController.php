@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class HomeController extends Controller
 {
     public function index() {
 
         $categories = DB::table('categories')
         ->whereNull('main_category_id')
-        ->orderBy('category_name', 'asc')
+        ->inRandomOrder()
         ->get();
         for ($i=0; $i < count($categories) ; $i++) {  
             $subcategories = DB::table('categories')
@@ -30,8 +29,19 @@ class CategoryController extends Controller
                 ];
             }
         }
+
+        $featuredPosts = DB::table('posts')
+        ->inRandomOrder()
+        ->limit(10)
+        ->join('users', function ($join) {
+            $join->on('users.id', '=', 'posts.user_id');
+        })
+        ->select('users.id','users.name', 'posts.id', 'posts.tags','posts.image_path')
+        ->get();
+
         return view('home', [
-            'categories' => $categories
+            'categories' => $categories,
+            'featuredPosts' => $featuredPosts
         ]);
     }
 }

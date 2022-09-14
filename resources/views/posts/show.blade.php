@@ -7,7 +7,7 @@
     <p>{{$post->description}}</p>
 
 
-    <p>Created by: {{$post_creator[0]->name}}</p>
+    <p>Posted by: <a href="{{ url('profile/'. $post_creator[0]->id)}}" > {{$post_creator[0]->name}}</a> </p>
     <p>Posted on: {{$post->created_at}}</p>
     
     @if ($post_category !== null)

@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Controllers\CategoryController;
 
 
 //Dit wordt de landingpage
-Route::get('/', [CategoryController::class, 'index']
+Route::get('/', [HomeController::class, 'index']
 )->name('home');
 
 Route::get('/greeting', function() {
@@ -27,10 +28,13 @@ Route::get('/greeting', function() {
 
 //Handle User routes
 Route::resource('users', UserController::class);
-Route::get('login', [UserController::class, 'login'])->name('users.login');
+Route::get('/login', [UserController::class, 'login'])->name('users.login');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
 
 //Handle Post routes
 Route::resource('posts', PostController::class);
+
+Route::get('/profile/{user}', [UserProfileController::class, 'showUserProfile'])->name('profile');
+
