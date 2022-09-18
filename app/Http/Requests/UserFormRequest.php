@@ -28,7 +28,7 @@ class UserFormRequest extends FormRequest
         return [
             'name' => ['required', Rule::unique('users', 'name'), 'min:2'],
             'email' => ['required', Rule::unique('users', 'email'), 'email'],
-            'password' => ['required', 'confirmed', Password::min(8)]
+            'password' => ['required', 'confirmed', Password::min(8), 'alpha_num']
         ];
     }
 }

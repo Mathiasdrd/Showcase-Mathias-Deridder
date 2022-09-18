@@ -7,11 +7,11 @@
     <p>{{$post->description}}</p>
 
 
-    <p>Posted by: <a href="{{ url('profile/'. $post_creator[0]->id)}}" > {{$post_creator[0]->name}}</a> </p>
+    <p>Posted by: <a href="{{ url('profile/'. $post_creator->id)}}" > {{$post_creator->name}}</a> </p>
     <p>Posted on: {{$post->created_at}}</p>
     
     @if ($post_category !== null)
-        <a href="/{{$post_category[0]->category_name}}">{{$post_category[0]->category_name}}</a> 
+        <a href="{{url('categories/' . $post_category->id)}}">{{$post_category->category_name}}</a> 
     @endif
 
     @can('delete', $post)    

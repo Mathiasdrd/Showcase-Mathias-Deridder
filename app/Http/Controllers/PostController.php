@@ -12,6 +12,7 @@ class PostController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete']]);
+        // $this->middleware('verified', ['only' => ['store', 'update', 'delete']]);
     }
     /**
      * Display a listing of the resource.
@@ -47,6 +48,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
+
+        //set up email verification first 
+        
+        // if(auth()->user()->email_verified_at === null) {
+        //     return back()->withErrors('Unable to post without email verification. Please verify your email first.');
+        // }
+
         //validate and add to formfields variable
         $formFields = $request->validate([
             'image_path' => 'required|image|mimes:jpg,png,jpeg,svg',
@@ -95,23 +103,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post_creator = DB::table('users')
-        ->where('id', '=', $post->user_id)
-        ->select('id', 'name')
-        ->get();
-
-        $post_category = null;
-        if ($post->category_id !== null) {
-            $post_category = DB::table('categories')
-            ->where('id', '=', $post->category_id)
-            ->select('id', 'category_name')
-            ->get();
-        }
-
+        
         return view('posts.show', [
             'post'=> $post,
-            'post_creator' => $post_creator,
-            'post_category' => $post_category
+            'post_creator' => $post->user,
+            'post_category' => $post->category
         ]);
     }
 

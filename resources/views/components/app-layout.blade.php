@@ -44,7 +44,7 @@
         </div>
         <div>
             @auth
-            <a href="{{route('users.show', ['user' => auth()->user()->id ])}}">Manage Your Profile</a>
+            <a href="{{route('users.show', ['user' => auth()->user()])}}">Manage Your Profile</a>
             <a href="{{route('logout')}}">Logout</a>
             @endauth
             @guest

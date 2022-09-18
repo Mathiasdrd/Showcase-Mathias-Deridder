@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserFormRequest;
@@ -16,7 +17,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['show','logout']]);
-        $this->middleware('guest', ['only' => ['create','store']]);
+        $this->middleware('guest', ['only' => ['login','create','store']]);
     }
     /**
      * Show the form for creating a new resource.
@@ -41,7 +42,7 @@ class UserController extends Controller
         $user = User::create($data);
 
         auth()->login($user);
-
+        
         return redirect()->route('home')->with('message', 'User created and logged in');
     }
 
@@ -51,9 +52,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        return view('users.show')->with('user', auth()->user());
+        if (!(auth()->user()->id === $user->id)) {
+            abort(403);
+        }
+        return view('users.show')->with('user', $user);
     }
 
     //Show login page
@@ -65,16 +69,28 @@ class UserController extends Controller
     //Authenticate user
     public function authenticate(Request $request)
     {
+        $is_active_user = DB::table('users')
+        ->select('active_account')
+        ->where('email', '=', $request->email)
+        ->first();
+    
+        if(!($is_active_user->active_account)) {
+           return back()->withErrors(['email' => 'This account has been banned, contact us for a request to unban this account'])
+           ->onlyInput('email');
+        }
+
         $remember = $request->remember;
         $formFields = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
+
+
 
         if (Auth::attempt($formFields, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->route('home')->with('message', 'Succesfully logged in');
+            return redirect()->intended();
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
@@ -98,9 +114,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {   
-        $data = User::findOrFail($id);
+        if (!(auth()->user()->id === $user->id)) {
+            abort(403);
+        }
+        $data = User::findOrFail($user->id);
 
         if($data->name !== $request->name) {
             $request->validate([

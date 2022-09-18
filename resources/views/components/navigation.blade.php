@@ -1,10 +1,12 @@
 
-    <li>{{$category['main_category']->category_name}}
-        <ul> 
-            @isset($category["subcategories"]) 
-                @for ($i = 0; $i < count($category["subcategories"]); $i++)
-                    <li>{{$category['subcategories'][$i]->category_name }}</li>
-                @endfor
-            @endisset
-        </ul>
-    </li>
+
+   <li> <a href="{{ url('categories/'. $category->id)}}">{{$category->category_name}}</a>
+    @if ($category->children)
+    <ul>
+        @foreach ($category->children as $subcategory)
+           <li><a href="{{ url('categories/' . $subcategory->id)}}"> {{ $subcategory->category_name }}</a></li>
+        @endforeach
+    </ul>
+    @endif
+   </li>
+  

@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +41,11 @@ Route::resource('posts', PostController::class);
 
 Route::get('/profile/{user}', [UserProfileController::class, 'showUserProfile'])->name('profile');
 
-Route::get('/moderator', [ModeratorController::class, 'showAllUsers'])->name('moderator');
+Route::prefix('moderator')->group(function() {
+    Route::get('/users', [ModeratorController::class, 'showAllUsers'])->name('moderator.users');
+    Route::put('/users/{user}', [ModeratorController::class, 'changeUserStatus'])->name('moderator.user-management');
+});
 
+Route::prefix('categories')->group(function() {
+    Route::get('/{category}',[CategoryController::class, 'showByCategory'])->name('show-category-posts');
+});

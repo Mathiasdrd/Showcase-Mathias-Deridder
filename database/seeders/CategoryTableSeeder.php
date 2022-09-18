@@ -105,14 +105,6 @@ class CategoryTableSeeder extends Seeder
                 'main_category_id' => 7
             ],
             [
-                'category_name' =>  'Fruits',
-                'main_category_id' => 7
-            ],
-            [
-                'category_name' =>  'Vegetables',
-                'main_category_id' => 7
-            ],
-            [
                 'category_name' =>  'Lunch',
                 'main_category_id' => 7
             ],
@@ -190,14 +182,6 @@ class CategoryTableSeeder extends Seeder
             ],
             [
                 'category_name' =>  'Shoes',
-                'main_category_id' => 9
-            ],
-            [
-                'category_name' =>  'Business',
-                'main_category_id' => 9
-            ],
-            [
-                'category_name' =>  'Casual',
                 'main_category_id' => 9
             ],
             [
