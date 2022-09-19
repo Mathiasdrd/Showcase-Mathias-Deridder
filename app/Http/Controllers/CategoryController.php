@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function showByCategory(Category $category) {
+    public function showByCategory(Category $selectedCategory) {
+        $categoriesTree = Category::tree()->get();
+
+        $categories = $categoriesTree->toTree();
+
         return view('categories.show-category-posts',[
-            'category' => $category,
-            'posts' => $category->posts,
+            'categories' => $categories,
+            'selectedCategory' => $selectedCategory,
+            'posts' => $selectedCategory->posts,
         ]);
     }
 }

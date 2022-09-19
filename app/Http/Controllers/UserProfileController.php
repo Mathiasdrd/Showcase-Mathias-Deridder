@@ -8,23 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class UserProfileController extends Controller
 {
-    public function showUserProfile($id) {
+    public function showUserProfile(User $user) {
 
-        //get profile owner's name
-        $profile = DB::table('users')
-        ->where('id', '=', $id) 
-        ->select('name')
-        ->get();
-
-        //get posts posted by profile
-        $posts = DB::table('posts')
-        ->where('user_id', '=', $id)
-        ->select()
-        ->get();
+        User::findOrFail($user->id);
 
         return view('profile', [
-            'profile' => $profile,
-            'posts' => $posts
+            'profile' => $user,
+            'posts' => $user->posts
         ]);
     }
 }

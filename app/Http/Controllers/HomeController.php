@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +14,10 @@ class HomeController extends Controller
         $categoriesTree = Category::tree()->get();
 
         $categories = $categoriesTree->toTree();
-
-
       
         //NEEDS TESTING -> Add more images
 
-        // $suggested_categories = DB::table('categories')
+        //$suggested_categories = DB::table('categories')
         // ->inRandomOrder()
         // ->limit(3)
         // ->join('posts', function($join) {
@@ -30,18 +29,20 @@ class HomeController extends Controller
 
         // dd($suggested_categories);
 
-        // $featuredPosts = DB::table('posts')
-        // ->inRandomOrder()
-        // ->limit(10)
-        // ->join('users', function ($join) {
-        //     $join->on('users.id', '=', 'posts.user_id');
-        // })
-        // ->select('users.id','users.name', 'posts.id', 'posts.tags','posts.image_path')
-        // ->get();
+        $featuredPosts = DB::table('posts')
+        ->inRandomOrder()
+        ->limit(10)
+        ->join('users', function ($join) {
+            $join->on('users.id', '=', 'posts.user_id');
+        })
+        ->select('users.name', 'posts.id', 'posts.user_id','posts.tags','posts.image_path')
+        ->get();
 
         return view('home', [
+            'posts' => Post::latest()
+            ->filter(request(['tag']))->get(),
             'categories' => $categories,
-            // 'featuredPosts' => $featuredPosts
+            'featuredPosts' => $featuredPosts
         ]);
     }
 }

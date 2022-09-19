@@ -90,7 +90,7 @@ class UserController extends Controller
         if (Auth::attempt($formFields, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended();
+            return redirect()->back();
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
@@ -105,7 +105,7 @@ class UserController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('message', 'User logged out');
+        return redirect()->back()->with('message', 'User logged out');
     }
     /**
      * Update the specified resource in storage.

@@ -21,7 +21,7 @@ use App\Models\Category;
 */
 
 
-//Dit wordt de landingpage
+//Landingpage
 Route::get('/', [HomeController::class, 'index']
 )->name('home');
 
@@ -39,13 +39,18 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 //Handle Post routes
 Route::resource('posts', PostController::class);
 
+//View a user's profile route
 Route::get('/profile/{user}', [UserProfileController::class, 'showUserProfile'])->name('profile');
 
+//Moderator routes
 Route::prefix('moderator')->group(function() {
     Route::get('/users', [ModeratorController::class, 'showAllUsers'])->name('moderator.users');
     Route::put('/users/{user}', [ModeratorController::class, 'changeUserStatus'])->name('moderator.user-management');
+    Route::get('/users/handle-permissions',[ModeratorController::class, 'showUsersModStatus'])->name('moderator.mod-permissions');
+    Route::put('/users/grant-permissions/{user}', [ModeratorController::class, 'handlePermissions'])->name('moderator.handle-permissions');
 });
 
+//Categories routes
 Route::prefix('categories')->group(function() {
-    Route::get('/{category}',[CategoryController::class, 'showByCategory'])->name('show-category-posts');
+    Route::get('/{selectedCategory}',[CategoryController::class, 'showByCategory'])->name('show-category-posts');
 });

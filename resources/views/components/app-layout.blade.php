@@ -52,6 +52,17 @@
             <a href="{{route('users.create')}}">Create Account</a>
             @endguest 
         </div>
+        <div class="wrapper">
         {{ $slot }}
+        </div>
+
+        <footer>
+            <ul>
+            <li><a href="">About</a></li>
+            <li><a href="">Rules</a></li>
+            </ul>
+            <p>Project by Mathias Deridder</p>
+        </footer>
     </body>
+
 </html>

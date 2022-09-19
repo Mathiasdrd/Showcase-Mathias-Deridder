@@ -65,7 +65,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return (auth()->check() && auth()->id() === $post->user_id) ;
+        return (auth()->check() && (auth()->id() === $post->user_id || auth()->user()->is_moderator)) ;
     }
 
     /**

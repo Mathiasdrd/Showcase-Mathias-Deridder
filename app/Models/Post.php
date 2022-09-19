@@ -9,6 +9,12 @@ class Post extends Model
 {
     use HasFactory;
 
+    public function scopeFilter($query, array $filters) {
+        if($filters['tag'] ?? false) {
+            $query->where('tags', 'like', '%' . request('tag') . '%');
+        }
+    }
+            
     public function category() {
         return $this->belongsTo(Category::class);
     }

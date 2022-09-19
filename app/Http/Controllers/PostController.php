@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete']]);
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update','delete']]);
         // $this->middleware('verified', ['only' => ['store', 'update', 'delete']]);
     }
     /**
@@ -57,7 +57,7 @@ class PostController extends Controller
 
         //validate and add to formfields variable
         $formFields = $request->validate([
-            'image_path' => 'required|image|mimes:jpg,png,jpeg,svg',
+            'image_path' => 'required|image|mimes:jpg,png,jpeg,svg,webp',
             'post_title' => 'required|max:150',
             'description' => 'required|max:250',
             'tags' => 'required|max:250',
@@ -117,9 +117,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $this->authorize('update', $post);
+        $categories = DB::table('categories')
+        ->select('id','category_name')
+        ->orderBy('category_name', 'asc')
+        ->get();
+        return view('posts.edit', [
+            'post' => $post,
+            'categories' => $categories
+        ]);
     }
 
     /**
