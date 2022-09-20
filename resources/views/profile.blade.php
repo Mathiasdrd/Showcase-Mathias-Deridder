@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="{{$profile->name}}">
     <h1>{{$profile->name}}</h1>
     
     Check out {{$profile->name}}'s posts

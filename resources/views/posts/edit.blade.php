@@ -1,7 +1,7 @@
 <x-app-layout title="My Post - Edit">
     <div>
         <div>
-        <h3>My Profile</h3>
+        <h3>My Post - {{$post->post_title}}</h3>
         <form method="POST" action="{{ route('posts.update', ['post' => $post]) }}">
             @csrf
             @method('PUT')
@@ -13,17 +13,19 @@
                    <p> {{ Session::get('message') }} </p>
             </div>
             @endif
+
+            <img src="{{ asset('images/' . $post->image_path)}}" width="560" height="420">
             <div>
                 <label for="post_title">Title</label>
                 <input type="text" id="post_title" value="{{$post->post_title}}" name="post_title">
             </div>
             <div>
-                <label for="email">Description</label>
-                <input type="textarea" id="description" value="{{$post->description}}" name="description" readonly>
+                <p><label for="description">Description</label></p>
+                <textarea id="description" name="description" cols="20" rows="10">{{$post->description}}</textarea>
             </div>
             <div>
                 <label for="tags">Tags</label>
-                <input type="text" id="tags" value="{{$post->tags}}" name="tags" readonly>
+                <input type="text" id="tags" value="{{$post->tags}}" name="tags">
             </div>
             <label for="category">Choose A Category</label>
             <select name="category" id="category">

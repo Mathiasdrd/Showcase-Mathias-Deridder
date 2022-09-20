@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,7 +59,7 @@ class PostController extends Controller
         //validate and add to formfields variable
         $formFields = $request->validate([
             'image_path' => 'required|image|mimes:jpg,png,jpeg,svg,webp',
-            'post_title' => 'required|max:150',
+            'post_title' => 'required|max:75',
             'description' => 'required|max:250',
             'tags' => 'required|max:250',
             'is_image_owner' => 'required'
@@ -137,9 +138,27 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+
+        $data = Post::findOrFail($post->id);
+
+        $request->validate([
+            'post_title' => ['required', 'max:150'],
+            'description' => ['required', 'max:250'],
+            'tags' => 'required|max:250',
+        ]);
+
+        Category::findOrFail($request->category);
+
+        $data->post_title = $request->post_title;
+        $data->description = $request->description;
+        $data->tags = $request->tags;
+        $data->category_id = $request->category;
+
+        $data->save();
+        return redirect()->route('posts.edit', $post)->with('message', 'Your post was succesfully updated');
     }
 
     /**

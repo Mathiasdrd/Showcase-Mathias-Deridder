@@ -30,38 +30,41 @@
             }
         </style>
         <link rel="stylesheet" href="{{url('css/app.css')}}">
+        @vite('resources/css/app.css')
         <script src="{{url('js/app.js')}}" defer></script>
     </head>
-    <body>
-        <div>
-            <nav>
-                <a href="{{route('home')}}">Home</a>               
+    <body class="bg-gray-300">
+        <div class="flex flex-row p-2 bg-black text-white">
+            <div>
+                <nav>
+                    <a href="{{route('home')}}" class="mr-1">Home</a>             
+                    @auth
+                        Welcome {{auth()->user()->name}}
+                        <a href="{{route('posts.create')}}">Upload</a>
+                    @endauth
+                </nav>
+            </div>
+            <div>
                 @auth
-                    Welcome {{auth()->user()->name}}
-                    <a href="{{route('posts.create')}}">Upload</a>
+                <a href="{{route('users.show', ['user' => auth()->user()])}}">Manage Your Profile</a>
+                <a href="{{route('logout')}}">Logout</a>
                 @endauth
-            </nav>
+                @guest
+                <a href="{{route('users.login')}}">Login</a>
+                <a href="{{route('users.create')}}">Create Account</a>
+                @endguest
+            </div>
         </div>
-        <div>
-            @auth
-            <a href="{{route('users.show', ['user' => auth()->user()])}}">Manage Your Profile</a>
-            <a href="{{route('logout')}}">Logout</a>
-            @endauth
-            @guest
-            <a href="{{route('users.login')}}">Login</a>
-            <a href="{{route('users.create')}}">Create Account</a>
-            @endguest 
-        </div>
-        <div class="wrapper">
+        <div class="wrapper container mx-auto bg-gray-400 justify-content-center">
         {{ $slot }}
         </div>
 
-        <footer>
-            <ul>
-            <li><a href="">About</a></li>
-            <li><a href="">Rules</a></li>
+        <footer class="p-2 bg-black text-white">
+            <ul class="flex flex-col ">
+                <li class="px-1"><a href="">About</a></li>
+                <li class="px-1"><a href="">Rules</a></li>
             </ul>
-            <p>Project by Mathias Deridder</p>
+            <p class="px-1">Project by Mathias Deridder</p>
         </footer>
     </body>
 
