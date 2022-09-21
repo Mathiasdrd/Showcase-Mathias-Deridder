@@ -149,8 +149,9 @@ class PostController extends Controller
             'description' => ['required', 'max:250'],
             'tags' => 'required|max:250',
         ]);
-
-        Category::findOrFail($request->category);
+        if($request->category !== null) {           
+            Category::findOrFail($request->category);
+        }
 
         $data->post_title = $request->post_title;
         $data->description = $request->description;

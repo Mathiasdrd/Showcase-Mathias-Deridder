@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         $this->middleware('auth', ['only' => ['show','logout']]);
         $this->middleware('guest', ['only' => ['login','create','store']]);
+        $this->middleware('throttle:5,1', ['only' => ['authenticate', 'store']]);
     }
     /**
      * Show the form for creating a new resource.
@@ -75,7 +76,7 @@ class UserController extends Controller
         ->first();
     
         if(!($is_active_user->active_account)) {
-           return back()->withErrors(['email' => 'This account has been banned, contact us for a request to unban this account'])
+           return back()->withErrors(['email' => 'This account is currently inactive, contact us to reactivate this account'])
            ->onlyInput('email');
         }
 

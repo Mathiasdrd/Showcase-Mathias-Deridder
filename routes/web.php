@@ -54,3 +54,17 @@ Route::prefix('moderator')->group(function() {
 Route::prefix('categories')->group(function() {
     Route::get('/{selectedCategory}',[CategoryController::class, 'showByCategory'])->name('show-category-posts');
 });
+
+
+//Footer routes
+Route::get('/termsofservice', function() {
+    return view('tos');
+})->name('tos');
+
+Route::get('/about', function() {
+    return view('about');
+})->name('about');
+
+Route::get('/contact', function() {
+    return view('contact');
+})->name('contact');

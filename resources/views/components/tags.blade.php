@@ -6,6 +6,8 @@
 
 <ul class="inline">
     @foreach ($tags as $tag)
-        <li><a href="/?tag={{$tag}}">{{$tag}}</a></li>
+        @unless ($tag === "") 
+            <li><a href="/?tag={{$tag}}">{{$tag}}</a></li>
+        @endunless
     @endforeach
 </ul>
