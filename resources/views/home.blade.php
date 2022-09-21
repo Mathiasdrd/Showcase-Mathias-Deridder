@@ -1,6 +1,6 @@
 <x-app-layout>
     <div>
-        <ul class="inline flex flex-wrap -ml-4">
+        <ul class="inline">
             @foreach ($categories as $category)
                 <x-navigation :category="$category" />
             @endforeach
@@ -18,7 +18,7 @@
         @endforeach
         </ul>
     @else 
-        <ul class="inline block md:flex flex-wrap">    
+        <ul class="inline">    
         @foreach($featuredPosts as $featuredPost)
             <li>
             <p><a href="{{ url('profile/'. $featuredPost->user_id)}}" >{{$featuredPost->name}}</a></p>

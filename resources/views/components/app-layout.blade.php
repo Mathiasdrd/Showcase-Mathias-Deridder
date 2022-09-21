@@ -30,14 +30,13 @@
             }
         </style>
         <link rel="stylesheet" href="{{url('css/app.css')}}">
-        @vite('resources/css/app.css')
         <script src="{{url('js/app.js')}}" defer></script>
     </head>
-    <body class="bg-gray-300">
-        <div class="flex flex-row p-2 bg-black text-white">
+    <body>
+        <div>
             <div>
                 <nav>
-                    <a href="{{route('home')}}" class="mr-1">Home</a>             
+                    <a href="{{route('home')}}">Home</a>             
                     @auth
                         Welcome {{auth()->user()->name}}
                         <a href="{{route('posts.create')}}">Upload</a>
@@ -55,16 +54,16 @@
                 @endguest
             </div>
         </div>
-        <div class="wrapper container mx-auto bg-gray-400 justify-content-center">
+        <div>
         {{ $slot }}
         </div>
 
-        <footer class="p-2 bg-black text-white">
-            <ul class="flex flex-col ">
-                <li class="px-1"><a href="">About</a></li>
-                <li class="px-1"><a href="">Rules</a></li>
+        <footer>
+            <ul>
+                <li><a href="">About</a></li>
+                <li><a href="">Rules</a></li>
             </ul>
-            <p class="px-1">Project by Mathias Deridder</p>
+            <p>Project by Mathias Deridder</p>
         </footer>
     </body>
 

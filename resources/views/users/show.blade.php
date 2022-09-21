@@ -14,12 +14,12 @@
             </div>
             @endif
             <div>
-                <label for="name">Your Name</label>
-                <input type="text" id="name" value="{{$user->name}}" name="name">
-            </div>
-            <div>
                 <label for="email">Your Email</label>
                 <input class="readonly" type="text" id="email" value="{{$user->email}}" name="email" readonly>
+            </div>
+            <div>
+                <label for="name">Your Name</label>
+                <input type="text" id="name" value="{{$user->name}}" name="name">
             </div>
             <div>
                 <label for="old_password">Old Password</label>
