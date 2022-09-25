@@ -1,18 +1,18 @@
 <x-app-layout>
-    <div>
+    <div class="container card-color">
         @if(Session::has('message'))
             <div class="form-error">
                 <p> {{ Session::get('message') }} </p>
             </div>
         @endif
         @if (count($users) !== 0)
-        <table>
+        <table class="table m-0">
             <thead>
                 <tr>
-                    <td>Username</td>
-                    <td>Email</td>
-                    <td>Active moderator</td>
-                    <td>Handle moderator role</td>
+                    <td scope="col" class="fw-bold">Username</td>
+                    <td scope="col" class="fw-bold">Email</td>
+                    <td scope="col" class="fw-bold">Active moderator</td>
+                    <td scope="col" class="fw-bold">Handle moderator role</td>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                     @endif
                 </td>
                 <td>
-                    <form action="{{route('moderator.handle-permissions', ['user' => $user])}}" method="POST">
+                    <form action="{{route('moderator.handle-permissions', ['user' => $user])}}" method="POST" class="text-start">
                         @csrf
                         @method('PUT')
                         @if ($user->is_moderator)

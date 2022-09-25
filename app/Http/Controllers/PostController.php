@@ -58,10 +58,10 @@ class PostController extends Controller
 
         //validate and add to formfields variable
         $formFields = $request->validate([
-            'image_path' => 'required|image|mimes:jpg,png,jpeg,svg,webp',
-            'post_title' => 'required|max:75',
-            'description' => 'required|max:250',
-            'tags' => 'required|max:250',
+            'image_path' => 'required|file|mimes:jpg,png,jpeg,svg,webp',
+            'post_title' => 'required|max:50',
+            'description' => 'required|max:150',
+            'tags' => 'required|max:100',
             'is_image_owner' => 'required'
         ]);
         $formFields['user_id'] = auth()->id();

@@ -1,18 +1,18 @@
 <x-app-layout>
-<div>
+<div class="container card-color">
     @if(Session::has('message'))
         <div class="form-error">
             <p> {{ Session::get('message') }} </p>
         </div>
     @endif
     @if (count($users) !== 0)
-    <table>
+    <table class="table m-0">
         <thead>
             <tr>
-                <td>Username</td>
-                <td>Email</td>
-                <td>Active user?</td>
-                <td>Handle user</td>
+                <td scope="col" class="fw-bold">Username</td>
+                <td scope="col" class="fw-bold">Email</td>
+                <td scope="col" class="fw-bold">Active user?</td>
+                <td scope="col" class="fw-bold">Handle user</td>
             </tr>
         </thead>
         <tbody>
@@ -27,11 +27,13 @@
                 No
                 @endif
             </td>
-            <td><form action="{{route('moderator.user-management', ['user' => $user])}}" method="POST">
+            <td>
+            <form action="{{route('moderator.user-management', ['user' => $user])}}" method="POST">
                 @csrf
                 @method('PUT')
-                <button type="submit" value="Change status">Change user's status</button></td>
+                <button type="submit" value="Change status">Change user's status</button>
             </form>
+            </td>
         </tr>
         @endforeach
         </tbody>

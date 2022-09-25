@@ -14,33 +14,22 @@ class HomeController extends Controller
         $categoriesTree = Category::tree()->get();
 
         $categories = $categoriesTree->toTree();
-      
-        //NEEDS TESTING -> Add more images
 
-        //$suggested_categories = DB::table('categories')
-        // ->inRandomOrder()
-        // ->limit(3)
-        // ->join('posts', function($join) {
-        //     $join->on('categories.id', '=', 'posts.category_id');
-        // })
-        // ->select('categories.id', 'categories.category_name', 'posts.id', 'posts.image_path')
-        // ->limit(3)
-        // ->get();
-
-        // dd($suggested_categories);
-
+        //fetch 6 random posts - different each refresh
         $featuredPosts = DB::table('posts')
         ->inRandomOrder()
-        ->limit(10)
+        ->limit(6)
         ->join('users', function ($join) {
             $join->on('users.id', '=', 'posts.user_id');
         })
         ->select('users.name', 'posts.id', 'posts.user_id','posts.tags','posts.image_path')
         ->get();
 
+
         return view('home', [
-            'posts' => Post::latest()
-            ->filter(request(['tag']))->get(),
+            'posts' => Post::latest() //in case of search term, 
+            ->filter(request(['tag'])) //filter function -> Model/Post
+            ->paginate(1), //quantity - for easy testing
             'categories' => $categories,
             'featuredPosts' => $featuredPosts
         ]);
