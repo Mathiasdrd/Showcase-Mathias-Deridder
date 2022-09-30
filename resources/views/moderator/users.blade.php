@@ -1,8 +1,8 @@
 <x-app-layout>
-<div class="container card-color">
+<div class="container justify-content-center box-shadow card-color my-5 rounded">
     @if(Session::has('message'))
-        <div class="form-error">
-            <p> {{ Session::get('message') }} </p>
+        <div>
+            <p class="fw-bold text-success"> {{ Session::get('message') }} </p>
         </div>
     @endif
     @if (count($users) !== 0)
@@ -28,7 +28,7 @@
                 @endif
             </td>
             <td>
-            <form action="{{route('moderator.user-management', ['user' => $user])}}" method="POST">
+            <form action="{{route('moderator.user-management', ['user' => $user])}}" method="POST" class="text-start">
                 @csrf
                 @method('PUT')
                 <button type="submit" value="Change status">Change user's status</button>
@@ -41,5 +41,9 @@
     @else 
         <p>No registered users</p>
     @endif
+    <div class="d-flex justify-content-end col-11">
+            <p>{{ $users->links() }}</p>
+        </div>
+            <p class="d-flex justify-content-end col-11"> Showing {{$users->firstItem()}} to {{$users->lastItem()}} of {{$users->total()}} results</p>
 </div>
 </x-app-layout>

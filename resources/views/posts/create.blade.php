@@ -1,28 +1,28 @@
 <x-app-layout>
 <div class="container-fluid">
-    <div class="d-flex justify-content-center row">
-        <div class="card-color login-form col-lg-5 col-md-12 px-4 py-4">
+    <div class="d-flex justify-content-center row my-5">
+        <div class="card-color login-form col-xl-5 col-lg-8 col-md-12 px-4 py-4 box-shadow rounded">
         <h3>Showcase Your Images</h3>
         <form action="{{route('posts.store')}}" class="px-4 py-3" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 @if($errors->any())
-                    {{$errors->first()}}
+                    <p class="text-danger fw-bold">{{$errors->first()}}</p>
                 @endif
             <label for="image_path">Upload Your Image Here</label>
             <input type="file" class="form-control" id="image_path" name="image_path">
             </div>
             <div class="mb-3"> 
             <label for="post_title">Give Your Post A Title</label>
-            <input type="text" class="form-control" id="post_title" name="post_title">
+            <input type="text" class="form-control" id="post_title" value="{{old('post_title')}}" placeholder="Give your post a title" name="post_title" maxlength="50">
             </div>
             <div class="mb-3">
             <label for="tags">Add Tags</label>
-            <input type="text" class="form-control" id="tags" name="tags">
+            <input type="text" class="form-control" id="tags" value="{{old('tags')}}" placeholder="Add a few tags" name="tags" maxlength="80">
             </div>
             <div  class="mb-3"> 
             <label for="description">Describe Your Post</label>
-            <input type="textarea" class="form-control" id="description" name="description">
+            <textarea class="form-control" id="description" placeholder="Describe your post" name="description" maxlength="150"></textarea>
             </div>
             <div class="mb-3">
             <label for="category">Choose A Category</label>

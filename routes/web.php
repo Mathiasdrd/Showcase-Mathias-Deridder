@@ -40,7 +40,7 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 Route::resource('posts', PostController::class);
 
 //View a user's profile route
-Route::get('/profile/{user}', [UserProfileController::class, 'showUserProfile'])->name('profile');
+Route::get('/profile/{user:name}', [UserProfileController::class, 'showUserProfile'])->name('profile');
 
 //Moderator routes
 Route::prefix('moderator')->group(function() {
@@ -54,6 +54,7 @@ Route::prefix('moderator')->group(function() {
 Route::prefix('categories')->group(function() {
     Route::get('/{selectedCategory}',[CategoryController::class, 'showByCategory'])->name('show-category-posts');
 });
+
 
 
 //Footer routes

@@ -1,19 +1,14 @@
 <x-app-layout title="Login">
 <div class="container-fluid">
-    <div class="row d-flex justify-content-center row">
-        <div class="card-color login-form col-xl-5 col-lg-8 col-md-12  py-4 px-4">
+    <div class="container-md flex d-flex justify-content-center box-shadow card-color my-5 rounded col-12 col-md-8 col-lg-6">
+        <div class="card-color login-form col-12 col-md-10 col-xl-8 py-4">
             <h3>Login</h3>
             <form method="POST" action="/users/authenticate" class="px-4 py-3">
                 @csrf
                 <div class="mb-3">
                     @error('email')
                     <div>
-                        <p>{{ $message}}</p>
-                    </div>
-                    @enderror
-                    @error('password')
-                    <div>
-                        <p>{{ $message}}</p>
+                        <p class="text-danger fw-bold">{{ $message}}</p>
                     </div>
                     @enderror
                     <label for="email">Your Email</label>

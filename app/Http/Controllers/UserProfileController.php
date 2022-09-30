@@ -10,11 +10,12 @@ class UserProfileController extends Controller
 {
     public function showUserProfile(User $user) {
 
-        User::findOrFail($user->id);
+        $user = User::findOrFail($user->id);
+        $posts = $user->posts()->paginate(4);
 
         return view('profile', [
             'profile' => $user,
-            'posts' => $user->posts
+            'posts' => $posts
         ]);
     }
 }

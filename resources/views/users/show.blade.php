@@ -1,17 +1,17 @@
 <x-app-layout title="My Profile">
 <div class="container-fluid">
-    <div class="d-flex justify-content-center row">
-        <div class="card-color login-form col-xl-5 col-lg-8 col-md-12 px-4 py-4">
+    <div class="container-md d-flex justify-content-center box-shadow card-color my-5 rounded col-12 col-md-8 col-lg-6">
+        <div class="card-color login-form col-12 col-md-10 col-xl-8 py-4">
         <h3>My Profile</h3>
         <form method="POST" action="{{ route('users.update', ['user' => auth()->user()->id ]) }}"  class="px-4 py-3">
             @csrf
             @method('PUT')
             @if($errors->any())
-                <h5>{{$errors->first()}}</h5>
+                <h5 class="text-danger">{{$errors->first()}}</h5>
             @endif
             @if(Session::has('message'))
             <div class="mb-3">
-                   <p> {{ Session::get('message') }} </p>
+                   <p class="text-success fw-bold"> {{ Session::get('message') }} </p>
             </div>
             @endif
             <div class="mb-3">

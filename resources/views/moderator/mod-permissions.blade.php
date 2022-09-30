@@ -1,8 +1,8 @@
 <x-app-layout>
-    <div class="container card-color">
+    <div class="container justify-content-center card-color my-5 rounded box-shadow">
         @if(Session::has('message'))
             <div class="form-error">
-                <p> {{ Session::get('message') }} </p>
+                <p class="fw-bold text-success"> {{ Session::get('message') }} </p>
             </div>
         @endif
         @if (count($users) !== 0)
@@ -45,5 +45,9 @@
         @else 
             <p>No registered users</p>
         @endif
+        <div class="d-flex justify-content-end col-11">
+            <p>{{ $users->links() }}</p>
+        </div>
+            <p class="d-flex justify-content-end col-11"> Showing {{$users->firstItem()}} to {{$users->lastItem()}} of {{$users->total()}} results</p>
     </div>
     </x-app-layout>

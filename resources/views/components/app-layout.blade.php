@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Showcase @isset($title) - {{$title}} @endisset</title>
 
@@ -22,28 +23,35 @@
     </head>
     <body>
         <div class="header">
-            <div class="inline d-flex justify-content-between">
-                <div class="left">
-                    <a href="{{route('home')}}" class="font-weight-bold"><img src="{{asset('images/layout/home-5-24.png')}}" class="pb-2"/><span class="fw-bold d-none d-md-inline-block">Home</span></a>             
-                </div>
-                <div class="right">
-                @auth
-                    <a href="{{route('posts.create')}}">Upload</a>
-                    <a href="{{route('users.show', ['user' => auth()->user()])}}">Manage Your Profile</a>
-                    <a href="{{route('logout')}}">Logout</a>
-                @endauth
-                @guest
-                <a href="{{route('users.login')}}">Login</a>
-                <a href="{{route('users.create')}}">Create Account</a>
-                @endguest
+            <div class="inline d-flex">
+                <div class="row col-12 justify-content-between">
+                    <div class="col-2">
+                        <a href="{{route('home')}}" class="font-weight-bold"><img src="{{asset('images/layout/home-5-24.png')}}" class="pb-2"/><span class="fw-bold d-none d-md-inline-block">Home</span></a>             
+                    </div>
+                    <div class="col-6 d-flex flex-wrap justify-content-sm-end">
+                    @auth
+                        <a href="{{route('posts.create')}}" class="px-1">Upload</a>
+                        <a href="{{route('users.show', ['user' => auth()->user()])}}"  class="px-1">Manage Your Profile</a>
+                        <a href="{{route('logout')}}"  class="px-1">Logout</a>
+                    @endauth
+                    @guest
+                    <a href="{{route('users.login')}}"  class="px-1">Login</a>
+                    <a href="{{route('users.create')}}"  class="px-1">Create Account</a>
+                    @endguest
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="d-flex flex-column min-vh-100 content-wrapper">
         {{ $slot }}
         </div>
 
-        <footer class="d-flex justify-content-between">
+        <script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous"></script>
+        @yield('scripts')
+        <footer class="d-block d-sm-flex justify-content-between mt-auto" >
             <ul>
                 <li><a href="/about">About</a></li>
                 <li><a href="/termsofservice">Terms of Service</a></li>

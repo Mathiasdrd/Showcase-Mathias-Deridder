@@ -13,4 +13,3 @@ window.onload = function() {
     radio.addEventListener('click', isOriginalCreatorField);
   }); 
 };
-

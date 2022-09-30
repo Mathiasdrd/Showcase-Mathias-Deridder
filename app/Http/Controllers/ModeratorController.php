@@ -20,7 +20,7 @@ class ModeratorController extends Controller
 
         $users = User::select('id', 'name','email','email_verified_at', 'active_account')
         ->where('is_moderator', false)
-        ->get();
+        ->paginate(25);
         return view('moderator.users', [
             'users' => $users,
         ]);
@@ -47,7 +47,7 @@ class ModeratorController extends Controller
         $users = User::select('id', 'name','email','email_verified_at', 'active_account', 'is_moderator')
         ->where('active_account', true) //only return active users
         ->whereNot('id','=', auth()->user()->id)
-        ->get();
+        ->paginate(25);
 
         return view('moderator.mod-permissions', [
             'users' => $users,

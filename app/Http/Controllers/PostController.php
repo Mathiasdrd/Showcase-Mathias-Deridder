@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Report;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,7 +62,7 @@ class PostController extends Controller
             'image_path' => 'required|file|mimes:jpg,png,jpeg,svg,webp',
             'post_title' => 'required|max:50',
             'description' => 'required|max:150',
-            'tags' => 'required|max:100',
+            'tags' => 'required|max:80',
             'is_image_owner' => 'required'
         ]);
         $formFields['user_id'] = auth()->id();
@@ -104,11 +105,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
+        $reports = Report::all();
+
         return view('posts.show', [
             'post'=> $post,
             'post_creator' => $post->user,
-            'post_category' => $post->category
+            'post_category' => $post->category,
+            'reports' => $reports
         ]);
     }
 
@@ -145,10 +148,11 @@ class PostController extends Controller
         $data = Post::findOrFail($post->id);
 
         $request->validate([
-            'post_title' => ['required', 'max:150'],
-            'description' => ['required', 'max:250'],
-            'tags' => 'required|max:250',
+            'post_title' => ['required', 'max:50'],
+            'description' => ['required', 'max:150'],
+            'tags' => ['required', 'max:80']
         ]);
+
         if($request->category !== null) {           
             Category::findOrFail($request->category);
         }

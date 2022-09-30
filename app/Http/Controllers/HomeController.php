@@ -28,8 +28,9 @@ class HomeController extends Controller
 
         return view('home', [
             'posts' => Post::latest() //in case of search term, 
-            ->filter(request(['tag'])) //filter function -> Model/Post
-            ->paginate(1), //quantity - for easy testing
+            ->filter(request(['search'])) //filter function -> Model/Post
+            ->paginate(1)  //quantity - for easy testing
+            ->withQueryString(), 
             'categories' => $categories,
             'featuredPosts' => $featuredPosts
         ]);

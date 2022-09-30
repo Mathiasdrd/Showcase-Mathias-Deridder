@@ -81,20 +81,20 @@ class UserController extends Controller
         }
 
         $remember = $request->remember;
-        $formFields = $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
 
 
-        if (Auth::attempt($formFields, $remember)) {
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->back();
+            return redirect()->back()->with('message', 'succesfully logged in');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
+        return back()->withErrors(['email' => 'Invalid credentials, please try again'])->onlyInput('email');
     }
 
     //Logout User
@@ -129,6 +129,9 @@ class UserController extends Controller
             $data->name = $request->name;
         } 
         if ($request->old_password !== null && $request->new_password !== null) {
+            if ($request->old_password === $request->new_password) {
+                return redirect()->route('users.show',  auth()->user())->withErrors(['message' => 'Cannot make new password the same as current password, please try again']);
+            }
             if (!Hash::check($request->old_password, $data->password)) {
                 return redirect()->route('users.show',  auth()->user())->withErrors(['message' => 'Credentials do not match'] );
             } 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,8 +11,11 @@ class Post extends Model
     use HasFactory;
 
     public function scopeFilter($query, array $filters) {
-        if($filters['tag'] ?? false) {
-            $query->where('tags', 'like', '%' . request('tag') . '%');
+        if($filters['search'] ?? false) {
+            $query->where('tags', 'like', '%' . request('search') . '%')
+            ->orWhere(function ($query) {
+                $query->where('post_title', 'like', '%'.  request('search') . '%');
+            });
         }
     }
             
