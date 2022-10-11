@@ -74,13 +74,7 @@ ul {
 div.img {
     object-fit: cover;
 }
-.inline { 
-    display:flex;
-}
 
-.inline > li {
-    margin: 1em;
-}
 
 .readonly {
     background-color: rgb(231, 225, 225);

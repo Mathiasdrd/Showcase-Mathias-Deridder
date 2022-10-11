@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Report;
 use App\Models\Category;
+use App\Models\ReportReason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,7 +50,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
-
+        dd($request->category);
         //set up email verification first 
         
         // if(auth()->user()->email_verified_at === null) {
@@ -105,13 +105,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $reports = Report::all();
+        $reportReasons = ReportReason::all();
 
         return view('posts.show', [
             'post'=> $post,
             'post_creator' => $post->user,
             'post_category' => $post->category,
-            'reports' => $reports
+            'reportReasons' => $reportReasons
         ]);
     }
 
@@ -176,6 +176,7 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         unlink("images/". $post->image_path);
+        $post->report()->delete();
         $post->delete();
         return redirect()->route('home');
     }

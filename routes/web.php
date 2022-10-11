@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Category;
 
@@ -48,6 +49,7 @@ Route::prefix('moderator')->group(function() {
     Route::put('/users/{user}', [ModeratorController::class, 'changeUserStatus'])->name('moderator.user-management');
     Route::get('/users/handle-permissions',[ModeratorController::class, 'showUsersModStatus'])->name('moderator.mod-permissions');
     Route::put('/users/grant-permissions/{user}', [ModeratorController::class, 'handlePermissions'])->name('moderator.handle-permissions');
+    Route::get('/posts/handle-reports', [ModeratorController::class, 'showReportedPosts'])->name('moderator.handle-reports');
 });
 
 //Categories routes
@@ -55,7 +57,8 @@ Route::prefix('categories')->group(function() {
     Route::get('/{selectedCategory}',[CategoryController::class, 'showByCategory'])->name('show-category-posts');
 });
 
-
+//Report Route
+Route::Post('/report/{post}', [ReportController::class, 'store'])->name('report.store');
 
 //Footer routes
 Route::get('/termsofservice', function() {

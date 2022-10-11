@@ -23,7 +23,7 @@
     </head>
     <body>
         <div class="header">
-            <div class="inline d-flex">
+            <div class="d-flex">
                 <div class="row col-12 justify-content-between">
                     <div class="col-2">
                         <a href="{{route('home')}}" class="font-weight-bold"><img src="{{asset('images/layout/home-5-24.png')}}" class="pb-2"/><span class="fw-bold d-none d-md-inline-block">Home</span></a>             
@@ -45,12 +45,6 @@
         <div class="d-flex flex-column min-vh-100 content-wrapper">
         {{ $slot }}
         </div>
-
-        <script
-        src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-        crossorigin="anonymous"></script>
-        @yield('scripts')
         <footer class="d-block d-sm-flex justify-content-between mt-auto" >
             <ul>
                 <li><a href="/about">About</a></li>

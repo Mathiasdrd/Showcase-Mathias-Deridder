@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,8 +11,8 @@ class ModeratorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['showAllUsers', 'changeUserStatus', 'showUsersModStatus']]);
-        $this->middleware('is_moderator', ['only' => ['showAllUsers', 'changeUserStatus', 'showUsersModStatus']]);
+        $this->middleware('auth');
+        $this->middleware('is_moderator');
     }
     
     //show existing users that aren't moderators
@@ -70,5 +71,15 @@ class ModeratorController extends Controller
             return back()->with('message', 'User ' . $user->name . ' has been granted a moderator role');
         }
     }
+
+    public function showReportedPosts() {
+        $reports = Report::select()
+        ->paginate(25);
+
+        return view('moderator.handle-reports', [
+            'reports' => $reports,
+        ]);
+    }
+
 
 }

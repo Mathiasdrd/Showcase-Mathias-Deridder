@@ -10,7 +10,7 @@
     <h2 class="text-white">{{$selectedCategory->category_name}} Images</h2>
     @unless (count($posts) === 0) 
     <div class="container-fluid">
-        <ul class="inline caption-style d-flex flex-wrap row justify-content-center"> 
+        <ul class="caption-style d-flex flex-wrap row justify-content-center"> 
         @foreach ($posts as $post)
         <li class="col-lg-5 col-md-10">
             <a href="{{ url('posts/' . $post->id)}}">

@@ -74,6 +74,11 @@ class UserController extends Controller
         ->select('active_account')
         ->where('email', '=', $request->email)
         ->first();
+
+        if($is_active_user === null) {
+            return back()->withErrors(['email' => 'This user does not exist, please register first'])
+            ->onlyInput('email');
+        }
     
         if(!($is_active_user->active_account)) {
            return back()->withErrors(['email' => 'This account is currently inactive, contact us to reactivate this account'])

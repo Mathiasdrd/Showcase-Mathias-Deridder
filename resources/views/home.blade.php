@@ -7,6 +7,8 @@
     </x-navigation-styling>
     
     @if(Request::get('search'))
+    
+    @if(count($posts) !== 0) 
     <h2 class="text-white">{{Request::get('search')}} Posts</h2>
     <div class="container-fluid">
         <ul class="caption-style row card-color rounded justify-content-center p-2"> 
@@ -29,6 +31,9 @@
         Showing {{$posts->firstItem()}} to {{$posts->lastItem()}} of {{$posts->total()}} results
         </div>
     </div>
+    @else
+    <h2 class="text-white d-flex justify-content-center ">No results found, please try a different search term</h2>
+    @endif
     @elseif(count($featuredPosts) !== 0) 
     <h2 class="text-white">Featured Posts</h2>
     <div class="container-fluid">

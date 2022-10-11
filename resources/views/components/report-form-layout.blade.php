@@ -6,7 +6,8 @@
           <h5 class="modal-title" id="modalToggleLabel">What is wrong with this post?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="" method="GET">
+        <form action="{{route('report.store', ['post'=> $post])}}" method="POST">
+        @csrf
         <div class="modal-body">
         <h3 class="d-flex">This post:</h3>
             {{$slot}}
@@ -18,5 +19,7 @@
     </div>
     </div>
 </div>
-<a class="btn btn-danger d-flex report" href="#modalToggle" role="button">Report</a>
+<button type="button" class="btn btn-danger d-flex report" data-bs-toggle="modal" data-bs-target="#modalToggle">
+  Report
+</button>
 

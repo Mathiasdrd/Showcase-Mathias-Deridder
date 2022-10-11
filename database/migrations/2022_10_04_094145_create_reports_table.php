@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('report');
+            $table->foreignId('report_reason_id')->references('id')->on('report_reasons');
+            $table->foreignId('complainant_id')->references('id')->on('users');
+            $table->foreignId('post_id')->constrained();
             $table->timestamps();
         });
     }

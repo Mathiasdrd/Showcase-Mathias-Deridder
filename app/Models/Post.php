@@ -18,7 +18,10 @@ class Post extends Model
             });
         }
     }
-            
+      
+    public function report() {
+        return $this->hasMany(Report::class);
+    }
     public function category() {
         return $this->belongsTo(Category::class);
     }
