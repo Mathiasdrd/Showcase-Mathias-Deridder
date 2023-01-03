@@ -1,3 +1,7 @@
+<p align="center">My first Laravel project, in which I learned the ins-and-outs of the Laravel framework. This project is an image hosting website made with the idea of learning the basics of laravel as well as going more advanced the more I learned about Laravel. From basics such as routes, controllers with CRUD functionality, blade templates and setting up and working with a MySQL database to uploading image files, working with Eloquent and recursive CTE.</p>
+<p align="center">This project was made as a final showcase during my training at the VDAB hence the name "Showcase". This showcase was made to show my knowledge of PHP, CSS and the subsequent framework: Laravel as well as my knowledge of working with MySQL.</p>
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
